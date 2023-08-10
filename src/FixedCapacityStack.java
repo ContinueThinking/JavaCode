@@ -44,5 +44,8 @@ public class FixedCapacityStack<Item>
     {
         return local;
     }
+    //新添加一个isFull方法
+    public boolean isFull(){return local==a.length;}
+
 
 }
