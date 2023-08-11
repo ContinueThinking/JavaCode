@@ -2,10 +2,8 @@ package sort;
 
 import edu.princeton.cs.algs4.StdOut;
 
-import java.util.Arrays;
-
 /*自顶向下归并*/
-public class Merge {
+public class QuickMerge {
     private static Comparable[] aux;
    public static void sort(Comparable[] a)
     {
@@ -23,7 +21,7 @@ public class Merge {
         if (less(a[mid+1],a[mid]))
             merge(a,lo,mid,hi);
     }
-    //原地归并的方法
+    //快速原地归并的方法
     public static void merge(Comparable[] a,int lo,int mid,int hi)
     {
         int N=a.length;
@@ -52,7 +50,6 @@ public class Merge {
     }
     public static void main(String[] args) {
         Integer[] a={1,2,3,4,5,7,8,9};
-        Arrays.sort(a);
         sort(a);
         show(a);
 

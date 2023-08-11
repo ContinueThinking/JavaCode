@@ -2,10 +2,8 @@ package sort;
 
 import edu.princeton.cs.algs4.StdOut;
 
-import java.util.Arrays;
-
 /*自顶向下归并*/
-public class Merge {
+public class SmallMerge {
     private static Comparable[] aux;
    public static void sort(Comparable[] a)
     {
@@ -17,11 +15,23 @@ public class Merge {
     {
         if(lo>=hi) return;
         int mid=lo+(hi-lo)/2;
-        sort(a,lo,mid);
-        sort(a,mid+1,hi);
-        /*修改为如果a[mid]<a[mid+1] 就不调用merger方法*/
-        if (less(a[mid+1],a[mid]))
-            merge(a,lo,mid,hi);
+        //数组长度大于15则使用归并
+        if (hi-lo>15)
+        {
+            sort(a,lo,mid);
+            sort(a,mid+1,hi);
+            /*修改为如果a[mid]<a[mid+1] 就不调用merger方法*/
+            if (less(a[mid+1],a[mid]))
+                merge(a,lo,mid,hi);
+        }
+        //否则使用插入排序
+        else
+        {
+            for (int i = lo+1; i <=hi; i++) {
+                for (int j=i; j>lo&&less(a[j],a[j-1]);j--)
+                    exch(a,j,j-1);
+            }
+        }
     }
     //原地归并的方法
     public static void merge(Comparable[] a,int lo,int mid,int hi)
@@ -42,7 +52,11 @@ public class Merge {
         }
     }
 
-
+    private static void exch(Comparable[] a,int i,int j){
+        Comparable t=a[j];
+        a[j]=a[i];
+        a[i]=t;
+    }
     private static boolean less(Comparable v, Comparable w) {return v.compareTo(w) < 0;}
     private static void show(Comparable[] a){
         for (int i = 0; i < a.length; i++) {
@@ -51,8 +65,8 @@ public class Merge {
         StdOut.println();
     }
     public static void main(String[] args) {
-        Integer[] a={1,2,3,4,5,7,8,9};
-        Arrays.sort(a);
+        Integer[] a={9,8,7,6,5,4,3,2,1};
+        show(a);
         sort(a);
         show(a);
 
